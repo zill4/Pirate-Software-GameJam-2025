@@ -19,3 +19,7 @@ dist/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+*/.zig-cache
+*/zig-cache
+*/zig-out
