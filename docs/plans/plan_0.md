@@ -34,19 +34,19 @@
    - Makes parallel development easier
    - Clear module boundaries
 
-5. [x] Configure build.zig
+5. [X] Configure build.zig
    - Set up separate build modes (debug, release, test)
    - Configure optimization levels
    - Set up test targets
    - Windows-specific optimizations
 
-6. [x] Install DirectX 12 SDK
+6. [X] Install DirectX 12 SDK
    - Required for 3D rendering
    - Best performance on Windows
    - Native Windows API with excellent tools
    - PIX integration for graphics debugging
 
-7. [ ] Install Windows SDK
+7. [X] Install Windows SDK
    - Provides core Windows development tools
    - DirectX debugging utilities
    - Performance analysis tools

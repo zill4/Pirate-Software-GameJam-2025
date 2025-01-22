@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'src/**'
+      - 'Makefile'
+      - 'build.zig'
+      - '.github/workflows/**'
+
+jobs:
+  build-check:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Zig
+      uses: goto-bus-stop/setup-zig@v2
+      with:
+        version: 0.11.0
+
+    # Use make targets defined in our Makefile
+    - name: Build Debug
+      run: make debug
+
+    - name: Run Tests
+      run: make test 
