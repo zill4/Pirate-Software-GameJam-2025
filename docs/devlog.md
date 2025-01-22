@@ -9,7 +9,7 @@ Status: In Progress 🚧
 - Current Focus: Memory Management System
 
 ### Completed Features
-- [ ] Memory Management
+  - [ ] Memory Management
   - [x] Custom allocators setup
   - [ ] Arena allocator for game state
   - [ ] Pool allocator for game objects
