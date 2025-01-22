@@ -1,24 +1,31 @@
+# Detect OS
+ifeq ($(OS),Windows_NT)
+    SHELL_EXT := .ps1
+else
+    SHELL_EXT := .sh
+endif
+
 .PHONY: all debug release dev clean test bench run
 
 all: debug
 
 debug:
-	@./scripts/build.sh -t debug
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -Config Debug
 
 release:
-	@./scripts/build.sh -t release
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -Config Release
 
 dev:
-	@./scripts/build.sh -t dev
+	@./scripts/build$(SHELL_EXT) -t dev
 
 clean:
-	@./scripts/clean.sh
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/clean.ps1
 
 test:
-	@./scripts/run-tests.sh
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1
 
 bench: release
-	@./scripts/run-tests.sh --bench
+	@./scripts/run-tests$(SHELL_EXT) --bench
 
 run: debug
 	@zig build run
