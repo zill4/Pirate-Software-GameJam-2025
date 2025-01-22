@@ -52,7 +52,7 @@
    - Performance analysis tools
    - Windows-specific APIs
 
-8. [ ] Set up CI/CD pipeline (Azure DevOps)
+8. [X] Set up CI/CD pipeline (Azure DevOps)
    - Ensures build consistency
    - Runs tests automatically
    - Catches issues early

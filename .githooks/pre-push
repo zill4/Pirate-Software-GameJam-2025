@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "Running pre-push checks..."
+
+# Run the same commands as our CI
+make debug || {
+    echo "❌ Debug build failed"
+    exit 1
+}
+
+make test || {
+    echo "❌ Tests failed"
+    exit 1
+}
+
+echo "✅ All pre-push checks passed!"
+exit 0

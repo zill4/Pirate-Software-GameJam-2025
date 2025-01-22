@@ -17,6 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - name: Setup Build Tools
+      run: |
+        choco install make ninja -y
+        refreshenv
+    
     - name: Setup Zig
       uses: goto-bus-stop/setup-zig@v2
       with:
