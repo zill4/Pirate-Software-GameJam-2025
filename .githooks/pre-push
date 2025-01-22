@@ -2,6 +2,8 @@
 
 echo "Running pre-push checks..."
 
+cd ./z-mmo
+
 # Run the same commands as our CI
 make debug || {
     echo "❌ Debug build failed"
