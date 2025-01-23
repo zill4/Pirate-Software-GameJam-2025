@@ -5,12 +5,12 @@ echo "Running pre-push checks..."
 cd ./z-mmo
 
 # Run the same commands as our CI
-make debug || {
+make build-debug || {
     echo "❌ Debug build failed"
     exit 1
 }
 
-make test || {
+make test-all || {
     echo "❌ Tests failed"
     exit 1
 }
