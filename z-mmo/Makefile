@@ -5,7 +5,7 @@ else
     SHELL_EXT := .sh
 endif
 
-.PHONY: all debug release dev clean test bench run
+.PHONY: all debug release clean test test-unit test-integration test-bench check
 
 all: debug
 
@@ -15,17 +15,25 @@ debug:
 release:
 	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -Config Release
 
-dev:
-	@./scripts/build$(SHELL_EXT) -t dev
-
 clean:
 	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/clean.ps1
 
+# Basic compilation check (used by CI)
+check:
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/check-build.ps1
+
+# Different test levels
 test:
-	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1 -Level basic
 
-bench: release
-	@./scripts/run-tests$(SHELL_EXT) --bench
+test-unit:
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1 -Level unit
 
-run: debug
-	@zig build run
+test-integration:
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1 -Level integration
+
+test-bench:
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1 -Level benchmark
+
+test-all:
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1 -Level all
