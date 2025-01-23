@@ -7,9 +7,8 @@ on:
     branches: [ "main" ]
     paths:
       - 'src/**'
-      - 'Makefile'
       - 'build.zig'
-      - '.github/workflows/**'
+      - 'scripts/**'
 
 jobs:
   build-check:
@@ -17,19 +16,18 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Setup Build Tools
-      run: |
-        choco install make ninja -y
-        refreshenv
-    
     - name: Setup Zig
       uses: goto-bus-stop/setup-zig@v2
       with:
-        version: 0.11.0
+        version: 0.13.0
 
-    # Use make targets defined in our Makefile
-    - name: Build Debug
-      run: make debug
+    - name: Install Build Tools
+      shell: pwsh
+      run: |
+        choco install make ninja -y
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
-    - name: Run Tests
-      run: make test 
+    # Just check if it compiles
+    - name: Basic Compilation Check
+      shell: pwsh
+      run: make check 

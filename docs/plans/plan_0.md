@@ -12,7 +12,7 @@
    - vcpkg: Package management for Windows
    - DirectX 12 SDK: Core graphics API
 
-3. [x] Install latest Zig compiler (0.11.0)
+3. [x] Install latest Zig compiler (0.13.0)
    - Latest stable version with best compatibility
    - Required for self-hosted compiler features
    - Includes package manager functionality
