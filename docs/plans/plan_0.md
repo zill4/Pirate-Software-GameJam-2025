@@ -17,7 +17,7 @@
    - Required for self-hosted compiler features
    - Includes package manager functionality
 
-4. [X] Set up project directory structure
+4. [x] Set up project directory structure
    ```
    mmo/
    ├── src/
@@ -61,6 +61,7 @@
 ## Core Infrastructure
 
 TODO: We will need to come back to this many times when memomory management get's crazier with 3D.
+
 9. [X] Create Windows-optimized memory management system
    - Custom allocators for different subsystems
    - Arena allocator for frame-based operations
@@ -68,16 +69,18 @@ TODO: We will need to come back to this many times when memomory management get'
    - Windows heap optimization
    - Implemented and tested with RPS game
 
-10. [ ] Implement logging system with blockchain integration
+10. [ ] Implement logging system with Solana integration
     - ETW (Event Tracing for Windows) integration
     - Different log levels (debug, info, warning, error)
     - Windows Event Log support
     - Performance tracking capabilities
+    - Solana transaction logging
     - Game event logging structure
 
 11. [ ] Create error handling framework
     - Define error types and handling strategies
     - Windows-specific error codes
+    - Solana transaction error handling
     - Set up error propagation patterns
     - Establish recovery mechanisms
 
@@ -121,80 +124,89 @@ TODO: We will need to come back to this many times when memomory management get'
 
 # Future Phases (To Be Detailed Later)
 
-## Phase 2: Blockchain Module (Expanded)
+## Phase 2: Solana Integration
 
-1. [ ] Design block structure for game events
-   - Define game event data structure
-   - Create block header format
-   - Implement hash linking
-   - Add timestamp and verification
-   - Game state serialization
+1. [ ] Set up Solana development environment
+    - Install Rust toolchain (stable)
+    - Install Solana CLI tools
+    - Configure local test validator
+    - Set up development accounts and keys
+    - Create deployment scripts
 
-2. [ ] Create basic blockchain operations
-   - Block creation
-   - Chain validation
-   - State verification
-   - Simple consensus rules
-   - Game state persistence
+2. [ ] Develop Solana program (smart contract)
+    ```rust
+    // Game state structure
+    #[account]
+    pub struct GameState {
+        pub player: Pubkey,
+        pub moves: Vec<GameMove>,
+        pub outcome: GameOutcome,
+        pub timestamp: i64,
+    }
+    ```
+    - Implement game state storage
+    - Create move validation logic
+    - Add security checks
+    - Implement state transitions
 
-3. [ ] Implement game state management
-   - Game result recording
-   - Player move history
-   - State transitions
-   - Replay capability
-   - State verification
+3. [ ] Create Zig-Rust bridge
+    - Define C-ABI compatible interface
+    - Implement memory-safe data passing
+    - Create error handling protocol
+    - Set up transaction signing
+    ```zig
+    pub const SolanaInterface = struct {
+        pub extern "solana" fn create_game() Error!GameHandle;
+        pub extern "solana" fn record_move(handle: GameHandle, move: Move) Error!void;
+        pub extern "solana" fn finalize_game(handle: GameHandle) Error!GameResult;
+    };
+    ```
 
-4. [ ] Add data compression
-   - Game state compression
-   - Move sequence optimization
-   - Chain size management
-   - Efficient storage format
+4. [ ] Implement local test environment
+    - Automated validator startup/shutdown
+    - Test account management
+    - Token airdrop automation
+    - State verification tools
 
-5. [ ] Create checkpoint system
-   - Regular state snapshots
-   - Quick state restoration
-   - Verification points
-   - Recovery mechanisms
+5. [ ] Create game state management
+    - On-chain state storage
+    - Local state caching
+    - State synchronization
+    - Conflict resolution
 
-6. [ ] Implement chain storage
-   - File-based persistence
-   - State serialization
-   - Quick loading/saving
-   - Corruption prevention
+6. [ ] Add transaction management
+    - Batch processing
+    - Fee optimization
+    - Retry mechanisms
+    - Transaction monitoring
 
-7. [ ] Add verification system
-   - Game rule verification
-   - Move validity checking
-   - State consistency
-   - Anti-cheat measures
+7. [ ] Implement verification system
+    - Move validity checking
+    - State consistency
+    - Transaction confirmation
+    - Anti-cheat measures
 
 8. [ ] Create query interface
-   - Game history lookup
-   - State examination
-   - Statistics gathering
-   - Performance metrics
+    - Game history lookup
+    - State examination
+    - Statistics gathering
+    - Performance metrics
 
-9. [ ] Implement pruning mechanism
-   - Old state cleanup
-   - Chain optimization
-   - Storage management
-   - Archive system
-
-10. [ ] Add testing framework
-    - Chain validation tests
+9. [ ] Add testing framework
+    - Solana program tests
+    - Integration tests
     - Performance benchmarks
     - State verification
-    - Stress testing
 
-11. [ ] Create debugging tools
-    - Chain explorer
+10. [ ] Create debugging tools
+    - Transaction explorer
     - State inspector
     - Event viewer
     - Performance analyzer
 
-12. [ ] Implement backup system
+11. [ ] Implement backup system
     - State backups
-    - Chain redundancy
+    - Transaction logs
     - Recovery tools
     - Backup verification
 
@@ -203,6 +215,9 @@ TODO: We will need to come back to this many times when memomory management get'
 2. [ ] Create client connection handling
 3. [ ] Design packet structure
 4. [ ] Windows Server optimization
+5. [ ] Solana RPC node integration
+6. [ ] Transaction broadcasting optimization
+7. [ ] State synchronization protocols
 
 ## Phase 4: Physics & Game Logic
 1. [ ] Create AABB collision system
@@ -222,5 +237,6 @@ TODO: We will need to come back to this many times when memomory management get'
 3. [ ] Create state management
 4. [ ] Set up testing framework
 5. [ ] Azure cloud integration
+6. [ ] Solana mainnet deployment preparation
 
 Would you like me to expand on any of these phases in more detail? We can create similarly detailed breakdowns for each phase as we approach them.
