@@ -7,8 +7,7 @@ param(
 $buildArgs = @(
     "build",
     "-Dtarget=x86_64-windows",
-    "-Doptimize=$Config",
-    "-Dgraphics=dx12"
+    "-Doptimize=$Config"
 )
 
 if ($Config -eq "Debug") {
