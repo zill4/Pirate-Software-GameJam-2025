@@ -1,7 +1,10 @@
 param(
     [Parameter(Mandatory=$true)]
     [ValidateSet("Debug", "Release")]
-    [string]$Config
+    [string]$Config,
+    
+    [Parameter(Mandatory=$false)]
+    [string]$TestFilter = ""
 )
 
 $buildArgs = @(
@@ -15,6 +18,10 @@ if ($Config -eq "Debug") {
         "-Dlogging=true",
         "-Dprofile=true"
     )
+}
+
+if ($TestFilter) {
+    $buildArgs += "-Dtest-filter=$TestFilter"
 }
 
 Write-Host "Building with config: $Config"

@@ -5,25 +5,17 @@ else
     SHELL_EXT := .sh
 endif
 
-.PHONY: all debug release clean test test-unit test-integration test-bench check
+.PHONY: all clean test test-basic test-unit test-integration test-all build-debug build-release run
 
-all: debug
+# Default target
+all: build-debug
 
-debug:
-	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -Config Debug
-
-release:
-	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -Config Release
-
+# Clean build artifacts
 clean:
 	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/clean.ps1
 
-# Basic compilation check (used by CI)
-check:
-	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/check-build.ps1
-
-# Different test levels
-test:
+# Test targets - all using build.zig test artifacts
+test-basic:
 	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1 -Level basic
 
 test-unit:
@@ -32,8 +24,16 @@ test-unit:
 test-integration:
 	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1 -Level integration
 
-test-bench:
-	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1 -Level benchmark
-
 test-all:
 	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1 -Level all
+
+# Build targets
+build-debug:
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -Config Debug
+
+build-release:
+	@pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -Config Release
+
+# Run target
+run:
+	./zig-out/bin/z-mmo.exe rps

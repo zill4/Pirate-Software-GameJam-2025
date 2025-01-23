@@ -1,5 +1,7 @@
 const std = @import("std");
-const memory = @import("../engine/memory.zig");
+const engine = @import("engine");
+const Logger = engine.Logger;
+const GameAllocator = engine.GameAllocator;
 
 pub const Choice = enum {
     rock,
@@ -31,14 +33,14 @@ pub const GameResult = enum {
 };
 
 pub const RpsGame = struct {
-    memory: *memory.GameAllocator,
+    memory: *GameAllocator,
     moves_history: std.ArrayList(Choice),
     player_wins: u32,
     computer_wins: u32,
     round: u32,
     prng: std.rand.DefaultPrng,
 
-    pub fn init(game_memory: *memory.GameAllocator) !*RpsGame {
+    pub fn init(game_memory: *GameAllocator) !*RpsGame {
         const game = try game_memory.allocator().create(RpsGame);
         game.* = RpsGame{
             .memory = game_memory,
@@ -93,3 +95,41 @@ pub const RpsGame = struct {
         return self.moves_history.items;
     }
 };
+
+pub fn startGame(game: *RpsGame, logger: *Logger) !void {
+    try logger.info("Welcome to Rock Paper Scissors!", "RPS");
+    try logger.info("First to win 2 rounds wins the game (max 10 rounds)", "RPS");
+    try logger.info("Enter 'r' for rock, 'p' for paper, or 's' for scissors", "RPS");
+
+    var buffer: [100]u8 = undefined;
+    var result = GameResult.in_progress;
+
+    while (result == .in_progress) {
+        try logger.info("Make your choice (r/p/s): ", "RPS");
+
+        const user_input = try std.io.getStdIn().reader().readUntilDelimiter(&buffer, '\n');
+        const trimmed_input = std.mem.trim(u8, user_input, &std.ascii.whitespace);
+
+        const choice = Choice.fromInput(trimmed_input) catch {
+            try logger.warning("Invalid input! Please enter 'r', 'p', or 's'", "RPS");
+            continue;
+        };
+
+        result = try game.play(choice);
+    }
+
+    // Game over - display final result
+    switch (result) {
+        .win => try logger.info("Congratulations! You won the game!", "RPS"),
+        .lose => try logger.info("Game Over! Computer wins!", "RPS"),
+        .cats_game => try logger.info("Cat's game! No winner after 10 rounds.", "RPS"),
+        else => unreachable,
+    }
+
+    try logger.info("\nGame History:", "RPS");
+    for (game.getHistory(), 0..) |move, i| {
+        const message = try std.fmt.allocPrint(game.memory.allocator(), "Round {d}: {s}", .{ i + 1, @tagName(move) });
+        defer game.memory.allocator().free(message);
+        try logger.info(message, "RPS");
+    }
+}

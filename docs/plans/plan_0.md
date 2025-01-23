@@ -60,17 +60,20 @@
 
 ## Core Infrastructure
 
-9. [ ] Create Windows-optimized memory management system
+TODO: We will need to come back to this many times when memomory management get's crazier with 3D.
+9. [X] Create Windows-optimized memory management system
    - Custom allocators for different subsystems
    - Arena allocator for frame-based operations
    - Pool allocator for frequently created/destroyed objects
    - Windows heap optimization
+   - Implemented and tested with RPS game
 
-10. [ ] Implement logging system
+10. [ ] Implement logging system with blockchain integration
     - ETW (Event Tracing for Windows) integration
     - Different log levels (debug, info, warning, error)
     - Windows Event Log support
     - Performance tracking capabilities
+    - Game event logging structure
 
 11. [ ] Create error handling framework
     - Define error types and handling strategies
@@ -118,11 +121,82 @@
 
 # Future Phases (To Be Detailed Later)
 
-## Phase 2: Blockchain Module
-1. [ ] Design block structure
-2. [ ] Implement event compression
-3. [ ] Create checkpoint system
-4. [ ] Azure blockchain integration
+## Phase 2: Blockchain Module (Expanded)
+
+1. [ ] Design block structure for game events
+   - Define game event data structure
+   - Create block header format
+   - Implement hash linking
+   - Add timestamp and verification
+   - Game state serialization
+
+2. [ ] Create basic blockchain operations
+   - Block creation
+   - Chain validation
+   - State verification
+   - Simple consensus rules
+   - Game state persistence
+
+3. [ ] Implement game state management
+   - Game result recording
+   - Player move history
+   - State transitions
+   - Replay capability
+   - State verification
+
+4. [ ] Add data compression
+   - Game state compression
+   - Move sequence optimization
+   - Chain size management
+   - Efficient storage format
+
+5. [ ] Create checkpoint system
+   - Regular state snapshots
+   - Quick state restoration
+   - Verification points
+   - Recovery mechanisms
+
+6. [ ] Implement chain storage
+   - File-based persistence
+   - State serialization
+   - Quick loading/saving
+   - Corruption prevention
+
+7. [ ] Add verification system
+   - Game rule verification
+   - Move validity checking
+   - State consistency
+   - Anti-cheat measures
+
+8. [ ] Create query interface
+   - Game history lookup
+   - State examination
+   - Statistics gathering
+   - Performance metrics
+
+9. [ ] Implement pruning mechanism
+   - Old state cleanup
+   - Chain optimization
+   - Storage management
+   - Archive system
+
+10. [ ] Add testing framework
+    - Chain validation tests
+    - Performance benchmarks
+    - State verification
+    - Stress testing
+
+11. [ ] Create debugging tools
+    - Chain explorer
+    - State inspector
+    - Event viewer
+    - Performance analyzer
+
+12. [ ] Implement backup system
+    - State backups
+    - Chain redundancy
+    - Recovery tools
+    - Backup verification
 
 ## Phase 3: Networking & Server
 1. [ ] Implement Windows networking stack

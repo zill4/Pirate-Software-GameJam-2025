@@ -1,14 +1,20 @@
-# Basic debug build
-./scripts/build.sh
+# Build and Test Scripts
 
-# Release build with tests and benchmarks
-./scripts/build.sh -t release -T -b
+## Building
+- Basic debug build: `make build-debug`
+- Release build: `make build-release`
+- Clean and rebuild: `make clean build-debug`
 
-# Clean, build dev version, and run
-./scripts/build.sh -t dev -c -r
+## Testing
+All tests are run through build.zig to ensure proper module dependencies:
 
-# Just run tests
-./scripts/run-tests.sh
+- Basic compilation check: `make test-basic`
+- Unit tests: `make test-unit`
+- Integration tests: `make test-integration`
+- All tests: `make test-all`
 
-# Clean build artifacts
-./scripts/clean.sh
+## Running
+- Run the game: `make run`
+
+## Clean
+- Clean build artifacts: `make clean`
